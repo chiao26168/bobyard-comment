@@ -1,6 +1,7 @@
 const db = require("../config/db");
 
-const selectCommentList = "SELECT * FROM comments ORDER BY id LIMIT $1 OFFSET $2 ";
+const selectCommentList =
+  "SELECT * FROM comments ORDER BY id LIMIT $1 OFFSET $2 ";
 const selectCommentById = "SELECT * FROM comments WHERE id = $1";
 const insertComment =
   "INSERT INTO comments (text, image) VALUES ($1, $2) RETURNING *";
@@ -34,10 +35,10 @@ const getCommentById = async (req, res) => {
   const { id } = req.params;
   try {
     const { rows } = await db.query(selectCommentById, [id]);
-    if (rows) {
-      res.json(rows);
-    } else {
+    if (rows.length === 0) {
       res.status(404).json({ error: "Comment not found" });
+    } else {
+      res.json(rows);
     }
   } catch (error) {
     console.error("Error executing query", error);
@@ -67,10 +68,10 @@ const updateComment = async (req, res) => {
   const { text } = req.body;
   try {
     const { rows } = await db.query(updateCommentText, [text, id]);
-    if (rows) {
-      res.json(rows);
-    } else {
+    if (rows.length === 0) {
       res.status(404).json({ error: "Comment not found" });
+    } else {
+      res.json(rows);
     }
   } catch (error) {
     console.error("Error executing query", error);
@@ -85,10 +86,10 @@ const deleteComment = async (req, res) => {
   const { id } = req.params;
   try {
     const { rows } = await db.query(deleteCommentById, [id]);
-    if (rows) {
-      res.status(200).json({ message: "Comment deleted" });
-    } else {
+    if (rows.length === 0) {
       res.status(404).json({ error: "Comment not found" });
+    } else {
+      res.status(200).json({ message: "Comment deleted" });
     }
   } catch (error) {
     console.error("Error executing query", error);
