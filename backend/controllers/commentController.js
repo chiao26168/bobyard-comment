@@ -2,6 +2,7 @@ const db = require("../config/db");
 
 const selectCommentList =
   "SELECT * FROM comments ORDER BY id LIMIT $1 OFFSET $2 ";
+const countComment = "SELECT COUNT(*) AS total_comments FROM comments";
 const selectCommentById = "SELECT * FROM comments WHERE id = $1";
 const insertComment =
   "INSERT INTO comments (text, image) VALUES ($1, $2) RETURNING *";
@@ -13,15 +14,15 @@ const deleteCommentById = "DELETE FROM comments WHERE id = $1 RETURNING *";
 // @route   GET /api/comments
 // @access  Public
 const getComments = async (req, res) => {
-  const { page_size, page_num } = req.query;
-  const next_offset = page_size * page_num;
+  const pageSize = parseInt(req.query.pageSize) || 3;
+  const pageNumber = parseInt(req.query.pageNumber) || 0;
+  const offset = pageSize * pageNumber;
 
   try {
-    const { rows } = await db.query(selectCommentList, [
-      page_size,
-      next_offset,
-    ]);
-    res.json(rows);
+    const { rows } = await db.query(selectCommentList, [pageSize, offset]);
+    const totalCommentsResult = await db.query(countComment);
+    const count = totalCommentsResult.rows[0].total_comments;
+    res.json({ rows, pageNumber, pages: Math.ceil(count / pageSize) });
   } catch (error) {
     console.error("Error executing query", error);
     res.status(500).json({ error: "Internal Server Error" });

@@ -8,13 +8,13 @@ const pool = new Pool({
   port: process.env.PG_PORT,
 });
 module.exports = {
-    query: async (text, params) => {
-        const client = await pool.connect();
-        try {
-            res = await client.query(text, params);
-            return res;
-        } finally {
-            client.release();
-        }
-    },
+  query: async (text, params) => {
+    const client = await pool.connect();
+    try {
+      res = await client.query(text, params);
+      return res;
+    } finally {
+      client.release();
+    }
+  },
 };
