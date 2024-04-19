@@ -21,7 +21,6 @@ export const CommentScreen = () => {
     if (window.confirm("Are you sure you want to create a new comment? ")) {
       try {
         await createComment({text: "New comment"});
-        refetch();
       } catch (err) {
         console.log(err?.data?.message || err.error);
       }

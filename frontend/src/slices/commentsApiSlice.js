@@ -6,7 +6,7 @@ export const commentsApiSlice = apiSlice.injectEndpoints({
       query: ({ pageNumber, pageSize }) => ({
         url: `${COMMENTS_URL}?pageNumber=${pageNumber}&pageSize=${pageSize}`,
       }),
-      invalidatesTags: ["Comment"],
+      providesTags: ["Comments"],
       keepUnusedDataFor: 5,
     }),
     createComment: builder.mutation({
@@ -15,7 +15,7 @@ export const commentsApiSlice = apiSlice.injectEndpoints({
         method: "POST",
         body: data,
       }),
-      invalidatesTags: ["Comment"],
+      invalidatesTags: ["Comments"],
     }),
   }),
 });

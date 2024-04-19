@@ -1,14 +1,8 @@
 import { Pagination } from "react-bootstrap";
-import { useGetCommentsQuery } from "../slices/commentsApiSlice";
 const Paginate = ({ pages, pageNumber, setPageNumber, pageSize }) => {
-  const { refetch } = useGetCommentsQuery({
-    pageNumber,
-    pageSize,
-  });
 
   const handlePageChange = (pageNumber) => {
     setPageNumber(pageNumber);
-    refetch({ pageNumber, pageSize });
   };
   return (
     pages > 1 && (
