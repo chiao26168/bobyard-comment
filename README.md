@@ -1,6 +1,6 @@
 # Bobyard Comment System
 This is a full-stack application that demonstrates basic CRUD operations on comments.
-- Frontend: React (not started yet)
+- Frontend: React, Redux
 - Backend: Node.js, Express, and PostgreSQL
 
 ## Features
@@ -91,7 +91,3 @@ Delete a comment by id
 curl --location --request DELETE 'http://localhost:5001/api/comments/2'
 
 ```
-
-## Next Steps
-
-The backend functionality is nearly complete, and the focus will now shift towards developing the frontend. I will add a post as a place holder and below the post would have a "Add a comment" textbox for users to add comments. Next, I'll create a comments component to display the comments. It will support pagination, allowing users to view a limited number of comments at a time. Each comment will have options to update or delete it by clicking the respective buttons. At the bottom of the comments section, I'll add a pagination component. This will allow users to navigate through different pages of comments.
